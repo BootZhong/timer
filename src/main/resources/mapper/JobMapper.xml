@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.bootzhong.timer.mapper.JobMapper">
+  <resultMap id="BaseResultMap" type="top.bootzhong.timer.model.entity.Job">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="descrpition" jdbcType="VARCHAR" property="descrpition" />
+    <result column="cron" jdbcType="VARCHAR" property="cron" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createDate" jdbcType="TIMESTAMP" property="createdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `name`, descrpition, cron, `status`, createDate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from job
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectExcludeStatus" resultType="top.bootzhong.timer.model.entity.Job">
+    select *
+    from job
+    where status != #{status}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from job
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="top.bootzhong.timer.model.entity.Job" useGeneratedKeys="true">
+    insert into job (id, `name`, descrpition, cron, req,
+      `status`, createDate)
+    values (#{id}, #{name,jdbcType=VARCHAR}, #{descrpition,jdbcType=VARCHAR}, #{cron,jdbcType=VARCHAR}, #{req},
+      #{status,jdbcType=INTEGER}, #{createdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="top.bootzhong.timer.model.entity.Job" useGeneratedKeys="true">
+    insert into job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="descrpition != null">
+        descrpition,
+      </if>
+      <if test="cron != null">
+        cron,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createdate != null">
+        createDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descrpition != null">
+        #{descrpition,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="top.bootzhong.timer.model.entity.Job">
+    update job
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="descrpition != null">
+        descrpition = #{descrpition,jdbcType=VARCHAR},
+      </if>
+      <if test="cron != null">
+        cron = #{cron,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null">
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.bootzhong.timer.model.entity.Job">
+    update job
+    set `name` = #{name,jdbcType=VARCHAR},
+      descrpition = #{descrpition,jdbcType=VARCHAR},
+      cron = #{cron,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=INTEGER},
+      createDate = #{createdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateStatusById">
+    update job
+    set status = #{status}
+    where id = #{id}
+  </update>
+</mapper>

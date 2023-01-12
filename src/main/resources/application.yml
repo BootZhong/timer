@@ -1,0 +1,29 @@
+
+#数据库连接池
+spring:
+  datasource:
+    username: root
+    password: illya0415
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://bootzhong.top:3306/timer?useUnicode=true&charaterEncoding=UTF-8&serverTimezone=GMT%2b8
+  jackson:
+    default-property-inclusion: non_null
+  #redis
+  redis:
+    host: bootzhong.top
+    port: 6379
+    password: illya0415
+
+#服务器配置
+server:
+  port: 8091
+  servlet:
+    context-path: /timer
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
