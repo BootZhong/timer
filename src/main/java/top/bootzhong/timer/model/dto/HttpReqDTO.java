@@ -10,6 +10,6 @@ import org.springframework.http.HttpMethod;
 @Data
 public class HttpReqDTO {
     private String url;
-    private String body;
+    private Object body;
     private String method;
 }

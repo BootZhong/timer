@@ -18,10 +18,8 @@ import top.bootzhong.timer.model.entity.Job;
 import top.bootzhong.timer.service.JobService;
 import top.bootzhong.timer.util.IdUtil;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -155,8 +153,8 @@ public class JobServiceImpl implements JobService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<Object> response
-                = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(param, headers), Object.class);
+        ResponseEntity<String> response
+                = restTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(param, headers), String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             log.info("请求成功,url:{},para:{},response:{}", url, JSONObject.toJSONString(param), JSONObject.toJSONString(response.getBody()));
             return true;
@@ -173,10 +171,10 @@ public class JobServiceImpl implements JobService {
      * @return
      */
     private static boolean doGet(String url){
-        ResponseEntity<Object> response;
+        ResponseEntity<String> response;
 
         log.info("请求开始,url:{}", JSONObject.toJSONString(url));
-        response = restTemplate.getForEntity(url, Object.class);
+        response = restTemplate.getForEntity(url, String.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             log.info("请求成功,url:{},response:{}", url, JSONObject.toJSONString(response.getBody()));
             return true;
